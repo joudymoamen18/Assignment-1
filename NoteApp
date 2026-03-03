@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+class Note {
+    String myNoteText;
+
+    Note(String inputFromUser){
+        myNoteText=inputFromUser;
+    }
+}
+
+public class NoteApp {
+    public static void main(String[] args) {
+
+        ArrayList<Note> myNotes=new ArrayList<>();
+        Scanner input=new Scanner(System.in);
+        int choice;
+
+        System.out.println("*****************************************");
+        System.out.println("=== Welcome to My Advanced Note Manager ===");
+        System.out.println("*****************************************");
+
+        do {
+            System.out.println("\n--- MAIN MENU ---");
+            System.out.println("1. Add New Note");
+            System.out.println("2. View All Notes");
+            System.out.println("3. Search in Notes");
+            System.out.println("4. Show Total Count");
+            System.out.println("5. Clear All Notes");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option: ");
+
+            choice = input.nextInt();
+            input.nextLine();
+
+            if (choice == 1) {
+                System.out.print("Write your note: ");
+                String userText = input.nextLine();
+                myNotes.add(new Note(userText));
+                System.out.println(" note saved successfully!");
+
+            }else if(choice==2){
+                if(myNotes.isEmpty()){
+                    System.out.println("your list is empty!");
+                }else{
+                    System.out.println("\n--- your Saved Notes ---");
+                    for(int i=0;i<myNotes.size();i++){
+                        System.out.println((i + 1)+". "+myNotes.get(i).myNoteText);
+                    }
+                }
+
+            }else if(choice==3){
+                System.out.print("enter word to search for: ");
+                String keyword=input.nextLine();
+                System.out.println("Search Results:");
+                boolean found=false;
+                for(Note n:myNotes){
+                    if(n.myNoteText.contains(keyword)) {
+                        System.out.println("- "+n.myNoteText);
+                        found=true;
+                    }
+                }
+                if(!found)
+                    System.out.println("No notes match your search.");
+
+            }else if(choice==4){
+                System.out.println("you have " +myNotes.size()+" notes in your list.");
+            }else if(choice==5){
+                myNotes.clear();
+                System.out.println("all notes deleted!");
+
+            }else if(choice!=6){
+                System.out.println("invalid choice! Please try again.");
+            }
+
+        }while(choice!=6);
+
+        System.out.println("\nClosing Program... Goodbye!");
+    }
+}
